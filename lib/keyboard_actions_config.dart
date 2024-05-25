@@ -26,10 +26,14 @@ class KeyboardActionsConfig {
   /// which dismisses the keyboard.
   final Widget? defaultDoneWidget;
 
+  /// A [Widget] to be optionally used as the ActionsBar.
+  final Widget? overlayWidget;
+
   const KeyboardActionsConfig({
     this.keyboardActionsPlatform = KeyboardActionsPlatform.ALL,
     this.nextFocus = true,
     this.actions,
+    this.overlayWidget,
     this.keyboardBarColor,
     this.keyboardBarElevation,
     this.keyboardSeparatorColor = Colors.transparent,

@@ -96,7 +96,7 @@ class KeyboardActions extends StatefulWidget {
       this.autoScroll = true,
       this.isDialog = false,
       @Deprecated('Use tapOutsideBehavior instead.')
-          this.tapOutsideToDismiss = false,
+      this.tapOutsideToDismiss = false,
       this.tapOutsideBehavior = TapOutsideBehavior.none,
       required this.config,
       this.overscroll = 12.0,
@@ -352,29 +352,37 @@ class KeyboardActionstate extends State<KeyboardActions>
                     : HitTestBehavior.opaque,
               ),
             ),
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: queryData.viewInsets.bottom,
-            child: Material(
-              color: config!.keyboardBarColor ?? Colors.grey[200],
-              elevation: config!.keyboardBarElevation ?? 20,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  if (_currentAction!.displayActionBar)
-                    _buildBar(_currentAction!.displayArrows),
-                  if (_currentFooter != null)
-                    AnimatedContainer(
-                      duration: _timeToDismiss,
-                      child: _currentFooter,
-                      height:
-                          _inserted ? _currentFooter!.preferredSize.height : 0,
-                    ),
-                ],
+          if (config?.overlayWidget != null)
+            Positioned(
+                right: 0,
+                left: 0,
+                bottom: queryData.viewInsets.bottom,
+                child: config?.overlayWidget ?? SizedBox())
+          else
+            Positioned(
+              left: 0,
+              right: 0,
+              bottom: queryData.viewInsets.bottom,
+              child: Material(
+                color: config!.keyboardBarColor ?? Colors.grey[200],
+                elevation: config!.keyboardBarElevation ?? 20,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    if (_currentAction!.displayActionBar)
+                      _buildBar(_currentAction!.displayArrows),
+                    if (_currentFooter != null)
+                      AnimatedContainer(
+                        duration: _timeToDismiss,
+                        child: _currentFooter,
+                        height: _inserted
+                            ? _currentFooter!.preferredSize.height
+                            : 0,
+                      ),
+                  ],
+                ),
               ),
             ),
-          ),
         ],
       );
     });
